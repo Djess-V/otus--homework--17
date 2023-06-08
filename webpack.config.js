@@ -1,5 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = () => ({
   entry: { index: path.resolve(__dirname, "./src/index.ts") },
@@ -24,6 +26,10 @@ module.exports = () => ({
         },
       },
       {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+      {
         test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
         type: "asset/resource",
         generator: {
@@ -36,7 +42,11 @@ module.exports = () => ({
     new HtmlWebpackPlugin({
       template: "index.html",
     }),
+    new MiniCssExtractPlugin(),
   ],
+  optimization: {
+    minimizer: [`...`, new CssMinimizerPlugin()],
+  },
   devServer: {
     compress: true,
     port: 9000,
