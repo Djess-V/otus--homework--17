@@ -1,1 +1,0 @@
-!function(){"use strict";const e=document.querySelector(".app");e&&("Hello",e.innerHTML="Hello")}();
