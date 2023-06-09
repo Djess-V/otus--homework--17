@@ -10,7 +10,7 @@ _**[Развёрнуто здесь](https://djess-v.github.io/otus--homework--1
 
 <h2>Визуальное представление</h2>
 
-<img alt="Chat" src="./src/assets/imageы/Preview.jpg" width="500px" height="320px"/>
+<img alt="Chat" src="./src/assets/images/Preview.jpg" width="500px" height="320px"/>
 
 <h2>Описание приложения</h2>
 
