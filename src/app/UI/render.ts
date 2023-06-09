@@ -1,12 +1,9 @@
 import { v4 } from "uuid";
-import type { RootState } from "./store/store";
-import { signIn, comeOut } from "./actions/auth";
-import {
-  addSizeToGoogleProfilePic,
-  displayMessage,
-  isUserSignedIn,
-} from "./service/functions";
-import { createMessage } from "./actions/messages";
+import type { RootState } from "../store/store";
+import { signIn, comeOut } from "../actions/auth";
+import { addSizeToGoogleProfilePic, displayMessage } from "./displayMessage";
+import { createMessage } from "../actions/messages";
+import { isUserSignedIn } from "../firebase/firebase";
 
 export function render(el: HTMLDivElement, store: RootState) {
   el.innerHTML = `<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -74,22 +71,7 @@ export function render(el: HTMLDivElement, store: RootState) {
             >
               Send
             </button>
-          </form>
-          <form id="image-form" action="#">
-            <input
-              id="mediaCapture"
-              type="file"
-              accept="image/*"
-              capture="camera"
-            />
-            <button
-              id="submitImage"
-              title="Add an image"
-              class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white"
-            >
-              <i class="material-icons">image</i>
-            </button>
-          </form>          
+          </form>                   
         </div>
         <p id="error-message">Sign in to your account</p>
       </div>

@@ -10,9 +10,6 @@ export default function messagesReducer(
       return { ...state, ...(action.payload as IMessages) };
     case "ADD_MESSAGES":
       return { ...(action.payload as IMessages) };
-    case "REMOVE_MESSAGE":
-      delete state[action.payload as string];
-      return { ...state };
     case "CLEAR_MESSAGES":
       return {};
     default:

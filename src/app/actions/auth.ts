@@ -17,7 +17,7 @@ export const comeOut = () => {
   signOut(auth);
 };
 
-const signedIn = (user: User) => {
+export const signedIn = (user: User) => {
   const payload: IAuth = {
     status: "SIGNED_IN",
     email: user.email,
@@ -31,7 +31,7 @@ const signedIn = (user: User) => {
   };
 };
 
-const signedOut = () => {
+export const signedOut = () => {
   const payload: IAuth = {
     status: "ANONYMOUS",
     email: null,

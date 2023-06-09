@@ -1,8 +1,7 @@
-import { ref, onChildAdded, update, remove, get } from "firebase/database";
+import { ref, onChildAdded, update, get } from "firebase/database";
 import type { AppDispatch } from "../store/store";
 import type { IMessage, IMessages } from "../store/initial-state";
-import { database } from "../firebase/firebase";
-import { isUserSignedIn } from "../service/functions";
+import { database, isUserSignedIn } from "../firebase/firebase";
 
 const messagesRef = ref(database, "messages");
 
@@ -33,13 +32,6 @@ export const addMessages = (messages: IMessages) => {
   };
 };
 
-export const removeMessage = (mid: string) => {
-  return {
-    type: "REMOVE_MESSAGE",
-    payload: mid,
-  };
-};
-
 export const clearMessages = () => {
   return {
     type: "CLEAR_MESSAGES",
@@ -62,10 +54,6 @@ export const createMessage = (
   };
 
   update(ref(database, `messages/${mid}`), message);
-};
-
-export const destroyMessage = (mid: string) => {
-  remove(ref(database, `messages/${mid}`));
 };
 
 export const startListeningForMessages = () => {

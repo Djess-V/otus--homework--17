@@ -18,3 +18,7 @@ const app = initializeApp(config);
 export const auth = getAuth(app);
 export const database = getDatabase(app);
 export const googleAuthProvider = new GoogleAuthProvider();
+
+export function isUserSignedIn() {
+  return !!getAuth().currentUser;
+}
