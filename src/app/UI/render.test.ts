@@ -1,5 +1,16 @@
+import { getAuth } from "firebase/auth";
 import { render } from "./render";
-import type { IState } from "./store/initial-state";
+import type { IState } from "../store/initial-state";
+
+jest.mock("firebase/auth", () => {
+  const originalModule = jest.requireActual("firebase/auth");
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    getAuth: jest.fn(() => false),
+  };
+});
 
 describe("render", () => {
   let el: HTMLDivElement;
@@ -109,5 +120,21 @@ describe("render", () => {
     const messages2 = el.querySelectorAll(".message-container");
 
     expect(messages2.length).toBe(2);
+  });
+
+  it("сhecking the error message output", () => {
+    render(el, storeI);
+
+    const form = el.querySelector("#message-form") as HTMLFormElement;
+
+    form.submit();
+
+    expect(getAuth).toHaveBeenCalled();
+
+    const errorMessage = el.querySelector("#error-message") as HTMLElement;
+
+    const styles = window.getComputedStyle(errorMessage);
+
+    expect(styles.opacity).toBe("1");
   });
 });
