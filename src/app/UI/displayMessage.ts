@@ -45,7 +45,7 @@ function createAndInsertMessage(
 function parseSmiles(message: string) {
   let parsedMessage = message;
   emoji.forEach((item) => {
-    parsedMessage = parsedMessage.replace(
+    parsedMessage = parsedMessage.replaceAll(
       item.represent,
       `<img src=${item.image} alt="Emoji" width=18px heght=18px/>`
     );
