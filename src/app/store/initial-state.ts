@@ -5,9 +5,7 @@ export interface IUser {
   photoURL: string;
 }
 
-export interface IUsers {
-  [uid: string]: IUser;
-}
+export type IUsers = Record<string, IUser>;
 
 export interface IAuth {
   status: "ANONYMOUS" | "SIGNED_IN";
@@ -25,9 +23,7 @@ export interface IMessage {
   timestamp: number;
 }
 
-export interface IMessages {
-  [mid: string]: IMessage;
-}
+export type IMessages = Record<string, IMessage>;
 
 export interface IState {
   auth: IAuth;

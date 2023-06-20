@@ -32,6 +32,8 @@ main,
   margin: 0 auto;
 }
 .mdl-card__supporting-text {
+  display: flex;
+  flex-direction: column;
   width: auto;
   height: 100%;
   padding-top: 0;
@@ -56,7 +58,6 @@ main,
   border-top: 1px solid #f3f3f3;
   padding-top: 10px;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
 }
 .message-container.visible {
   opacity: 1;
@@ -77,6 +78,7 @@ main,
   display: table-cell;
   width: calc(100% - 40px);
   padding: 5px 0 5px 10px;
+  white-space: pre-wrap;
 }
 .message-container .name {
   display: inline-block;
@@ -90,6 +92,7 @@ main,
 #message-form {
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
   width: calc(100% - 48px);
   float: left;
   width: 100%;
@@ -99,7 +102,7 @@ main,
 }
 #message-form button {
   width: 100px;
-  margin: 15px 0 0 10px;
+  margin: 15px 0 20px 10px;
   cursor: pointer;
 }
 
@@ -113,6 +116,12 @@ main,
   color: red;
   font-size: 16px;
   letter-spacing: 1px;
+}
+.emoji {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  cursor: pointer;
 }
 .mdl-card {
   min-height: 0;

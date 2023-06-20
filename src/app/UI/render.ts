@@ -4,9 +4,11 @@ import { signIn, comeOut } from "../actions/auth";
 import { addSizeToGoogleProfilePic, displayMessage } from "./displayMessage";
 import { createMessage } from "../actions/messages";
 import { isUserSignedIn } from "../firebase/firebase";
+import { emoji } from "./constants";
 
 export function render(el: HTMLDivElement, store: RootState) {
-  el.innerHTML = `<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  el.innerHTML = `
+  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <!-- Header section containing logo -->
   <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700" >
     <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
@@ -56,13 +58,13 @@ export function render(el: HTMLDivElement, store: RootState) {
           <div id="messages"></div>
           <form id="message-form" action="#">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
-              <input
+              <textarea
                 class="mdl-textfield__input"
                 type="text"
                 id="message"
                 autocomplete="off"
                 placeholder="Message..."
-              />
+              ></textarea>
             </div>
             <button
               id="submit"
@@ -71,7 +73,15 @@ export function render(el: HTMLDivElement, store: RootState) {
             >
               Send
             </button>
-          </form>                   
+          </form> 
+          <div id="message-emoji">
+            ${emoji
+              .map(
+                (item) =>
+                  `<img data-id=${item.title} class="emoji" src=${item.image} alt="Emoji"/>`
+              )
+              .join("")}
+          </div>                  
         </div>
         <p id="error-message">Sign in to your account</p>
       </div>
@@ -101,6 +111,10 @@ export function render(el: HTMLDivElement, store: RootState) {
   const messageFormElement = el.querySelector(
     "#message-form"
   ) as HTMLFormElement;
+  const messageTextareaElement = el.querySelector(
+    "#message"
+  ) as HTMLTextAreaElement;
+  const messageEmoji = el.querySelector("#message-emoji") as HTMLDivElement;
 
   signOutButtonElement?.addEventListener("click", comeOut);
   signInButtonElement?.addEventListener("click", signIn);
@@ -117,10 +131,6 @@ export function render(el: HTMLDivElement, store: RootState) {
   messageFormElement?.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const messageInputElement = el.querySelector(
-      "#message"
-    ) as HTMLInputElement;
-
     if (!isUserSignedIn()) {
       const errorMessage = el.querySelector("#error-message") as HTMLElement;
 
@@ -133,14 +143,26 @@ export function render(el: HTMLDivElement, store: RootState) {
       setTimeout(() => {
         errorMessage.style.opacity = "0";
       }, 2000);
-    } else if (messageInputElement?.value) {
+    } else if (messageTextareaElement?.value) {
       createMessage(
         v4(),
-        messageInputElement.value,
+        messageTextareaElement.value,
         store.auth.uid as string,
         store.auth.displayName as string,
         store.auth.photoURL as string
       );
     }
+  });
+
+  messageEmoji?.addEventListener("click", (e) => {
+    if (!(e.target as HTMLElement).matches("img")) {
+      return;
+    }
+
+    const represent = emoji.find(
+      (item) => item.title === (e.target as HTMLImageElement).dataset.id
+    )?.represent;
+
+    messageTextareaElement.value += represent;
   });
 }

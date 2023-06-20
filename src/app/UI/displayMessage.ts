@@ -1,3 +1,5 @@
+import { emoji } from "./constants";
+
 export function addSizeToGoogleProfilePic(url: string) {
   if (url.indexOf("googleusercontent.com") !== -1 && url.indexOf("?") === -1) {
     return `${url}?sz=150`;
@@ -40,6 +42,18 @@ function createAndInsertMessage(
   return div;
 }
 
+function parseSmiles(message: string) {
+  let parsedMessage = message;
+  emoji.forEach((item) => {
+    parsedMessage = parsedMessage.replace(
+      item.represent,
+      `<img src=${item.image} alt="Emoji" width=18px heght=18px/>`
+    );
+  });
+
+  return parsedMessage;
+}
+
 export function displayMessage(
   el: HTMLDivElement,
   id: string,
@@ -63,7 +77,7 @@ export function displayMessage(
   const messageElement = div.querySelector(".message") as HTMLDivElement;
 
   if (text) {
-    messageElement.textContent = text;
+    messageElement.innerHTML = parseSmiles(text);
     messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, "<br>");
   }
 
