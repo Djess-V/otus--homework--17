@@ -117,9 +117,12 @@ main,
   font-size: 16px;
   letter-spacing: 1px;
 }
+
+#message-emoji {
+  display: flex;
+  flex-direction: row;
+}
 .emoji {
-  width: 25px;
-  height: 25px;
   margin-right: 10px;
   cursor: pointer;
 }

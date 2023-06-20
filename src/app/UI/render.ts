@@ -78,7 +78,7 @@ export function render(el: HTMLDivElement, store: RootState) {
             ${emoji
               .map(
                 (item) =>
-                  `<img data-id=${item.title} class="emoji" src=${item.image} alt="Emoji"/>`
+                  `<img class="emoji" data-id=${item.title} src=${item.image} alt="Emoji" width=25px height=25px />`
               )
               .join("")}
           </div>                  
